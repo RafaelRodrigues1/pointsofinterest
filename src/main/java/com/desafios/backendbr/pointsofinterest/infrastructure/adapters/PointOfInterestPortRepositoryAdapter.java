@@ -2,26 +2,26 @@ package com.desafios.backendbr.pointsofinterest.infrastructure.adapters;
 
 import com.desafios.backendbr.pointsofinterest.application.models.PointOfInterest;
 import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterestPortDataSourcePort;
-import com.desafios.backendbr.pointsofinterest.infrastructure.mappers.PointOfInterestMapper;
+import static com.desafios.backendbr.pointsofinterest.infrastructure.mappers.PointOfInterestMapper.INSTANCE;
 import com.desafios.backendbr.pointsofinterest.infrastructure.repositories.PointOfInterestRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PointOfInterestPortRepositoryAdapter implements PointOfInterestPortDataSourcePort {
 
     private final PointOfInterestRepository pointOfInterestRepository;
-    private final PointOfInterestMapper pointOfInterestMapper;
 
-    public PointOfInterestPortRepositoryAdapter(PointOfInterestRepository pointOfInterestRepository, PointOfInterestMapper pointOfInterestMapper) {
+    public PointOfInterestPortRepositoryAdapter(PointOfInterestRepository pointOfInterestRepository) {
         this.pointOfInterestRepository = pointOfInterestRepository;
-        this.pointOfInterestMapper = pointOfInterestMapper;
     }
 
     @Override
     public void save(PointOfInterest poi) {
-        // TODO document why this method is empty
+        var entity = INSTANCE.modelToEntity(poi);
+        pointOfInterestRepository.save(entity);
     }
 
     @Override

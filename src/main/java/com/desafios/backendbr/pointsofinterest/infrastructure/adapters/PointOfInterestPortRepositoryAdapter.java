@@ -25,6 +25,11 @@ public class PointOfInterestPortRepositoryAdapter implements PointOfInterestPort
     }
 
     @Override
+    public Set<PointOfInterest> getAllPointOfInterests() {
+        return pointOfInterestRepository.findAll().stream().map(INSTANCE::entityToModel).collect(Collectors.toSet());
+    }
+
+    @Override
     public Set<PointOfInterest> searchNearbyPointsOfInterest(Integer distanciaMaxima, Integer x, Integer y) {
         return Set.of();
     }

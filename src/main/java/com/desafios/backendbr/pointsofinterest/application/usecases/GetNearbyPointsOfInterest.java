@@ -5,15 +5,15 @@ import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterest
 
 import java.util.Set;
 
-public class GetAllPointOfInterests {
+public class GetNearbyPointsOfInterest {
 
     private PointOfInterestDataSourcePort pointOfInterestDataSourcePort;
 
-    public GetAllPointOfInterests(PointOfInterestDataSourcePort pointOfInterestDataSourcePort) {
+    public GetNearbyPointsOfInterest(PointOfInterestDataSourcePort pointOfInterestDataSourcePort) {
         this.pointOfInterestDataSourcePort = pointOfInterestDataSourcePort;
     }
 
-    public Set<PointOfInterest> execute() {
-        return pointOfInterestDataSourcePort.getAllPointOfInterests();
+    public Set<PointOfInterest> execute(Integer maxDistance, Integer x, Integer y) {
+        return pointOfInterestDataSourcePort.searchNearbyPointsOfInterest(maxDistance, x, y);
     }
 }

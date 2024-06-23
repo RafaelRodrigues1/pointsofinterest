@@ -1,8 +1,8 @@
 package com.desafios.backendbr.pointsofinterest.infrastructure.controllers;
 
-import com.desafios.backendbr.pointsofinterest.application.models.PointOfInterest;
-import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterestPortDataSourcePort;
+import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterestDataSourcePort;
 import com.desafios.backendbr.pointsofinterest.application.usecases.GetAllPointOfInterests;
+import com.desafios.backendbr.pointsofinterest.application.usecases.GetNearbyPointsOfInterest;
 import com.desafios.backendbr.pointsofinterest.application.usecases.SavePointOfInterestUseCase;
 import com.desafios.backendbr.pointsofinterest.infrastructure.dtos.PointOfInterestDTO;
 import static com.desafios.backendbr.pointsofinterest.infrastructure.mappers.PointOfInterestMapper.INSTANCE;
@@ -19,10 +19,12 @@ public class PointOfInterestController {
 
     private final SavePointOfInterestUseCase savePointOfInterestUseCase;
     private final GetAllPointOfInterests getAllPointOfInterests;
+    private final GetNearbyPointsOfInterest getNearbyPointsOfInterest;
 
-    public PointOfInterestController(PointOfInterestPortDataSourcePort dataSource) {
+    public PointOfInterestController(PointOfInterestDataSourcePort dataSource) {
         savePointOfInterestUseCase = new SavePointOfInterestUseCase(dataSource);
         getAllPointOfInterests = new GetAllPointOfInterests(dataSource);
+        getNearbyPointsOfInterest = new GetNearbyPointsOfInterest(dataSource);
     }
 
     @PostMapping
@@ -34,6 +36,18 @@ public class PointOfInterestController {
     @GetMapping
     public ResponseEntity<Set<PointOfInterestDTO>> getAllPointOfInterest() {
         return ResponseEntity.ok(getAllPointOfInterests.execute()
+                .stream()
+                .map(INSTANCE::modelToDTO)
+                .collect(Collectors.toSet())
+        );
+    }
+
+    @GetMapping("nearby")
+    public ResponseEntity<Set<PointOfInterestDTO>> getPointsOfInterestNearMe(
+            @RequestParam(required = true) Integer maxDistance,
+            @RequestParam(required = true) Integer x,
+            @RequestParam(required = true) Integer y) {
+        return ResponseEntity.ok(getNearbyPointsOfInterest.execute(maxDistance, x, y)
                 .stream()
                 .map(INSTANCE::modelToDTO)
                 .collect(Collectors.toSet())

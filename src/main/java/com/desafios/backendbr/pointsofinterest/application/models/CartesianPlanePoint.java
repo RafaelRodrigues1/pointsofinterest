@@ -2,8 +2,8 @@ package com.desafios.backendbr.pointsofinterest.application.models;
 
 public record CartesianPlanePoint(Integer value) {
 
-    public CartesianPlanePoint(Integer value) {
-        this.value = value;
+    public CartesianPlanePoint {
+        validate(value);
     }
 
     private void validate(Integer value) {

@@ -4,7 +4,7 @@ import com.desafios.backendbr.pointsofinterest.application.models.PointOfInteres
 
 import java.util.Set;
 
-public interface PointOfInterestPortDataSourcePort {
+public interface PointOfInterestDataSourcePort {
 
     void save(PointOfInterest poi);
     Set<PointOfInterest> getAllPointOfInterests();

@@ -5,11 +5,11 @@ import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterest
 
 import java.util.Set;
 
-public class GetNearbyPointsOfInterest {
+public class GetNearbyPointsOfInterestUseCase {
 
     private PointOfInterestDataSourcePort pointOfInterestDataSourcePort;
 
-    public GetNearbyPointsOfInterest(PointOfInterestDataSourcePort pointOfInterestDataSourcePort) {
+    public GetNearbyPointsOfInterestUseCase(PointOfInterestDataSourcePort pointOfInterestDataSourcePort) {
         this.pointOfInterestDataSourcePort = pointOfInterestDataSourcePort;
     }
 

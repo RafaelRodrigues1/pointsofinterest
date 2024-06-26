@@ -5,11 +5,11 @@ import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterest
 
 import java.util.Set;
 
-public class GetAllPointOfInterests {
+public class GetAllPointOfInterestsUseCase {
 
     private PointOfInterestDataSourcePort pointOfInterestDataSourcePort;
 
-    public GetAllPointOfInterests(PointOfInterestDataSourcePort pointOfInterestDataSourcePort) {
+    public GetAllPointOfInterestsUseCase(PointOfInterestDataSourcePort pointOfInterestDataSourcePort) {
         this.pointOfInterestDataSourcePort = pointOfInterestDataSourcePort;
     }
 

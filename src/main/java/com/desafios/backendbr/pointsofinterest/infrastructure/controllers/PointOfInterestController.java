@@ -1,8 +1,8 @@
 package com.desafios.backendbr.pointsofinterest.infrastructure.controllers;
 
 import com.desafios.backendbr.pointsofinterest.application.ports.PointOfInterestDataSourcePort;
-import com.desafios.backendbr.pointsofinterest.application.usecases.GetAllPointOfInterests;
-import com.desafios.backendbr.pointsofinterest.application.usecases.GetNearbyPointsOfInterest;
+import com.desafios.backendbr.pointsofinterest.application.usecases.GetAllPointOfInterestsUseCase;
+import com.desafios.backendbr.pointsofinterest.application.usecases.GetNearbyPointsOfInterestUseCase;
 import com.desafios.backendbr.pointsofinterest.application.usecases.SavePointOfInterestUseCase;
 import com.desafios.backendbr.pointsofinterest.infrastructure.dtos.PointOfInterestDTO;
 import static com.desafios.backendbr.pointsofinterest.infrastructure.mappers.PointOfInterestMapper.INSTANCE;
@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 public class PointOfInterestController {
 
     private final SavePointOfInterestUseCase savePointOfInterestUseCase;
-    private final GetAllPointOfInterests getAllPointOfInterests;
-    private final GetNearbyPointsOfInterest getNearbyPointsOfInterest;
+    private final GetAllPointOfInterestsUseCase getAllPointOfInterestsUseCase;
+    private final GetNearbyPointsOfInterestUseCase getNearbyPointsOfInterestUseCase;
 
     public PointOfInterestController(PointOfInterestDataSourcePort dataSource) {
         savePointOfInterestUseCase = new SavePointOfInterestUseCase(dataSource);
-        getAllPointOfInterests = new GetAllPointOfInterests(dataSource);
-        getNearbyPointsOfInterest = new GetNearbyPointsOfInterest(dataSource);
+        getAllPointOfInterestsUseCase = new GetAllPointOfInterestsUseCase(dataSource);
+        getNearbyPointsOfInterestUseCase = new GetNearbyPointsOfInterestUseCase(dataSource);
     }
 
     @PostMapping
@@ -35,7 +35,7 @@ public class PointOfInterestController {
 
     @GetMapping
     public ResponseEntity<Set<PointOfInterestDTO>> getAllPointOfInterest() {
-        return ResponseEntity.ok(getAllPointOfInterests.execute()
+        return ResponseEntity.ok(getAllPointOfInterestsUseCase.execute()
                 .stream()
                 .map(INSTANCE::modelToDTO)
                 .collect(Collectors.toSet())
@@ -47,7 +47,7 @@ public class PointOfInterestController {
             @RequestParam(required = true) Integer maxDistance,
             @RequestParam(required = true) Integer x,
             @RequestParam(required = true) Integer y) {
-        return ResponseEntity.ok(getNearbyPointsOfInterest.execute(maxDistance, x, y)
+        return ResponseEntity.ok(getNearbyPointsOfInterestUseCase.execute(maxDistance, x, y)
                 .stream()
                 .map(INSTANCE::modelToDTO)
                 .collect(Collectors.toSet())
